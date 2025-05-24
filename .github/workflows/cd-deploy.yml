@@ -1,0 +1,40 @@
+name: Continuous Deployment (CD)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker CLI
+        uses: docker/setup-cli@v2
+
+      - name: Login to Docker Hub (Optional)
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Install Docker Compose
+        run: |
+          DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+          mkdir -p $DOCKER_CONFIG/cli-plugins
+          curl -SL https://github.com/docker/compose/releases/download/v2.26.0/docker-compose-linux-x86_64  -o $DOCKER_CONFIG/cli-plugins/docker-compose
+          chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+          docker compose version
+
+      - name: Pull latest images and start containers
+        run: |
+          docker-compose pull
+          docker-compose up -d
+
+      - name: Show running containers
+        run: docker ps
