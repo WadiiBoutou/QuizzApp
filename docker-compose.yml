@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    image: wadiiboutou/quizzapp-backend:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/quizzapp
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - database
+
+  frontend:
+    image: wadiiboutou/quizzapp-frontend:latest
+    ports:
+      - "5173:80"
+
+  database:
+    image: mysql:8.0
+    container_name: mysql-container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: quizzapp
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
