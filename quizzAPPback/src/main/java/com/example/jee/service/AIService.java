@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class AIService {
+    private static final String GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAKxsguQPheD6QMFMl-T_I0YLnhJ1Af2TM";
 
-    private static final String GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}";
 
     public Map<String, Object> generateQuiz(String prompt, int numberOfQuestions, boolean singleCorrectAnswer) {
         try {
