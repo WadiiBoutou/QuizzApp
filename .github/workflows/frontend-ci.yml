@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'frontend/**'
+      - 'quizzAPPfront/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'frontend/**'
+      - 'quizzAPPfront/**'
 
 jobs:
   frontend:
@@ -25,21 +25,21 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Navigate to frontend directory
-        run: cd frontend
+      - name: Navigate to quizzAPPfront directory
+        run: cd quizzAPPfront
 
       - name: Install dependencies
         run: |
-          cd frontend
+          cd quizzAPPfront
           npm ci
 
       - name: Run tests
         run: |
-          cd frontend
+          cd quizzAPPfront
           npm test -- --coverage --ci
 
       - name: Upload frontend coverage
         uses: actions/upload-artifact@v4
         with:
           name: frontend-coverage
-          path: frontend/coverage/
+          path: quizzAPPfront/coverage/
