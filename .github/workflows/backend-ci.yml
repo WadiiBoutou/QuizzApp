@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'backend/**'
+      - 'quizzAPPback/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'backend/**'
+      - 'quizzAPPback/**'
 
 jobs:
   backend:
@@ -39,8 +39,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Navigate to backend directory
-        run: cd backend
+      - name: Navigate to quizzAPPback directory
+        run: cd quizzAPPback
 
       - name: Build and test with Maven
         env:
@@ -50,11 +50,11 @@ jobs:
           SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
           SPRING_JPA_SHOW_SQL: true
         run: |
-          cd backend
+          cd quizzAPPback
           mvn clean test
 
       - name: Upload backend test results
         uses: actions/upload-artifact@v4
         with:
           name: backend-test-results
-          path: backend/target/surefire-reports/
+          path: quizzAPPback/target/surefire-reports/
